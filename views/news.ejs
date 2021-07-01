@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="/css/styles.css" />
+    <title>Document</title>
+  </head>
+  <body>
+    <div id="outside-container">
+      <%- include("partials/newsHeader") %> <%- include("partials/navbar") %>
+
+      <section>
+        <article>
+          <div class="author_date">
+            <span class="author"> <%= post.author %> </span>
+            <span class="date"> <%= post.date %> </span>
+          </div>
+          <a href="/news/<%= post.id %>"><h2><%= post.title%></h2></a>
+          <p><%= post.content%></p>
+        </article>
+      </section>
+      <section>
+        <h1>Comments</h1>
+        <% for(const comment of comments) {%>
+        <article>
+          <p>
+            <span class="author"> <%= comment.username %> </span>
+            <span class="date"> <%= comment.date %> </span>
+          </p>
+          <p><%= comment.comment %></p>
+        </article>
+        <% } %>
+      </section>
+      <div>
+        <form
+          action=""
+          method="POST"
+          enctype="application/x-www-form-urlencoded"
+        >
+          <input
+            type="text"
+            name="comment"
+            autocomplete="off"
+            placeholder="Your comment..."
+          />
+          <button type="submit">COMMENT</button>
+        </form>
+      </div>
+    </div>
+  </body>
+</html>

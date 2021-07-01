@@ -1,0 +1,15 @@
+<nav id="navbar">
+  <ul>
+    <% if(typeof user == 'undefined'){ %>
+    <a href="/login"><li>LOGIN</li></a>
+    <% } else{ %>
+    <a href="/logout"><li>LOGOUT</li></a>
+    <% } %>
+    <a href="/forum"><li>FORUM</li></a>
+    <a href="#"><li>ABOUT ME</li></a>
+    <a href="https://github.com/AragoK7" target="_blank"><li>GITHUB</li></a>
+    <% if(typeof user_type != 'undefined' && user_type === 'admin'){ %>
+    <a href="newArticle"><li>NEW ARTICLE</li></a>
+    <% } %>
+  </ul>
+</nav>

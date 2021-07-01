@@ -1,0 +1,72 @@
+:root {
+  --navbar-separator--color: green;
+}
+body {
+  color: white;
+  background: rgb(32, 96, 160);
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font-family: Arial, Helvetica, sans-serif;
+}
+a {
+  text-decoration: none;
+  color: lightblue;
+}
+#outside-container {
+  margin: auto;
+  width: 1000px;
+  background: green;
+  /* temporary height */
+  min-height: 100vh;
+}
+.banner-center {
+  display: block;
+  width: 100%;
+}
+nav {
+  background: aqua;
+  /* temporary height */
+  /* height: 48px; */
+}
+ul {
+  margin: 0;
+  border-left: 2px var(--navbar-separator--color, green) solid;
+  border-right: 2px var(--navbar-separator--color, green) solid;
+  display: flex;
+  list-style-type: none;
+  flex-direction: row-reverse;
+}
+ul a li {
+  font-size: 20px;
+  margin: 0 8px;
+  color: black;
+}
+ul a {
+  border-left: 2px var(--navbar-separator--color, green) solid;
+  text-decoration: none;
+}
+
+article {
+  margin-top: 28px;
+  border-top: 1px solid rgb(32, 96, 160);
+  border-bottom: 1px solid rgb(32, 96, 160);
+}
+section {
+  padding-left: 20px;
+  padding-right: 20px;
+  border-top: 1px solid rgb(32, 96, 160);
+  border-bottom: 1px solid rgb(32, 96, 160);
+}
+
+h2,
+p {
+  margin: 0 0 5px 0;
+}
+
+.date {
+  float: right;
+}
+span {
+  font-size: 10px;
+}
