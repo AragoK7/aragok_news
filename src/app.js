@@ -1,14 +1,8 @@
 require("dotenv").config();
-console.log(
-  process.env.PORT,
-  process.env.COOKIEMAXAGE,
-  process.env.DB_PASSWORD,
-  process.env.SESSION_SECRET
-);
 
 const express = require("express");
 const session = require("express-session");
-const db = require("./database/database.js");
+// const db = require("./database/database.js");
 
 const {
   users,
@@ -42,7 +36,6 @@ app.use((req, _res, next) => {
   console.log(req.method, req.path);
   next();
 });
-const THIRTY_MINUTES = 1000 * 60 * 30;
 
 const path = require("path");
 const publicDirectoryPath = path.join(__dirname, "../public");
