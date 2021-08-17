@@ -1,0 +1,62 @@
+<%- include("partials/aboveBody") %>
+<div id="outside-container">
+  <%- include("partials/newsHeader") %> <%- include("partials/navbar") %> <%-
+  include("partials/settings/updateUserForm") %> <%-
+  include("partials/settings/deleteUserForm") %>
+</div>
+<script>
+  document.querySelector("#updateUser").addEventListener("click", function (e) {
+    e.preventDefault();
+    console.log("submited update");
+    const newUsername = document.querySelector("#newUsername").value;
+    const currentPassword = document.querySelector("#currentPassword").value;
+    const newPassword = document.querySelector("#newPassword").value;
+    const confirmNewPassword = document.querySelector(
+      "#confirmNewPassword"
+    ).value;
+    const body = {
+      newUsername,
+      currentPassword,
+      newPassword,
+      confirmNewPassword,
+    };
+    fetch("/users", {
+      method: "PUT",
+      body: JSON.stringify(body),
+      headers: { "Content-Type": "application/json" },
+    })
+      .then((response) => {
+        if (response.status === 200) {
+          window.location = "/login";
+        } else {
+          window.location = "/settings?error=couldNotUpdateAccount";
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  });
+</script>
+<script>
+  document.querySelector("#deleteUser").addEventListener("click", function (e) {
+    e.preventDefault();
+    const password = document.querySelector("#deleteUserPassword").value;
+    const body = { password };
+    fetch("/users", {
+      method: "DELETE",
+      body: JSON.stringify(body),
+      headers: { "Content-Type": "application/json" },
+    })
+      .then((response) => {
+        if (response.status === 200) {
+          window.location = "/login";
+        } else {
+          window.location = "/settings?error=couldNotDeleteAccount";
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  });
+</script>
+<%- include("partials/bellowBody") %>

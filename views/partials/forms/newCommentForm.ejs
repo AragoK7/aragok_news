@@ -1,0 +1,24 @@
+<% if(typeof user == 'undefined'){ %>
+<div>You must log in to comment...</div>
+<% } else{ %>
+<div>
+  <form
+    id="form-newComment"
+    action="/comments"
+    method="POST"
+    enctype="application/x-www-form-urlencoded"
+  >
+    <input type="text" hidden name="postId" value="<%= post.id %>" />
+    <textarea
+      name="comment"
+      id="comment"
+      cols="50"
+      rows="5"
+      required
+      placeholder="Your comment..."
+    ></textarea>
+
+    <button type="submit">Submit</button>
+  </form>
+</div>
+<% } %>

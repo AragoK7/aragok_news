@@ -1,0 +1,140 @@
+<% if(typeof user_type != 'undefined' && user_type === 'admin'){ %>
+<script>
+  document.querySelector("#deletePost") &&
+    document
+      .querySelector("#deletePost")
+      .addEventListener("click", function () {
+        fetch("/posts/<%= post.id %>", {
+          method: "DELETE",
+        })
+          .then((response) => {
+            if (response.status === 200) {
+              window.location = "/";
+            } else {
+              window.location = "/news/<%= post.id %>";
+            }
+          })
+          .catch((err) => {
+            console.log(err);
+          });
+      });
+</script>
+<script>
+  function populateInputs() {
+    document.querySelector("#title").value = "<%= post.title%>";
+    document.querySelector("#content").value = "<%= post.content%>";
+    document.querySelector("#saveEdit").addEventListener("click", function (e) {
+      e.preventDefault();
+      const newTitle = document.querySelector("#title").value;
+      const newContent = document.querySelector("#content").value;
+      const body = {
+        newTitle,
+        newContent,
+      };
+      fetch("/posts/<%= post.id%>", {
+        method: "PUT",
+        body: JSON.stringify(body),
+        headers: { "Content-Type": "application/json" },
+      })
+        .then((response) => {
+          if (response.status === 200) {
+            window.location = "/news/<%= post.id%>";
+          } else {
+            window.location = "/?error=couldNotUpdatePost";
+          }
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    });
+  }
+  function insertForm() {
+    const html = `
+              <form
+                action="posts/<%= post.id %>"
+                method="PUT"
+                enctype="application/x-www-form-urlencoded"
+              >
+                <label for="title">
+                  <input id="title" type="text" name="title" required/>
+                </label>
+      
+                <label for="content">
+                  <textarea id="content" required name="content" cols="100" rows="5"></textarea>
+                </label>
+      
+                <button id="saveEdit" type="submit">Save edit</button>
+              </form>
+            `;
+    document.querySelector("#editSpace").innerHTML = html;
+    populateInputs();
+  }
+  document.querySelector("#editPost") &&
+    document.querySelector("#editPost").addEventListener("click", insertForm);
+</script>
+<% } %>
+<script>
+  function deleteComment(commentId) {
+    fetch(`/comments/${commentId}`, {
+      method: "DELETE",
+    })
+      .then((response) => {
+        if (response.status === 200) {
+          window.location = "news/<%= post.id%>";
+        } else {
+          window.location = "/?error=couldNotDeleteComment";
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }
+</script>
+<script>
+  function editComment(e, commentId) {
+    function populateComment() {
+      document.querySelector("#comment").value =
+        e.target.previousElementSibling.textContent;
+    }
+    const html = `
+              <form
+              id="form-editComment"
+                action="comments/${commentId}"
+                method="PUT"
+                enctype="application/x-www-form-urlencoded"
+              >
+                <label for="comment">
+                  <textarea id="comment" required name="comment" cols="100" rows="5"></textarea>
+                </label>
+      
+                <button id="saveEdit" type="submit">Save edit</button>
+              </form>
+            `;
+    document.querySelector("#editCommentPlaceholder").innerHTML = html;
+    populateComment();
+    document.querySelector("#saveEdit") &&
+      document
+        .querySelector("#saveEdit")
+        .addEventListener("click", function (e) {
+          e.preventDefault();
+          const body = {
+            comment: document.querySelector("#comment").value,
+          };
+          fetch(`/comments/${commentId}`, {
+            method: "PUT",
+            body: JSON.stringify(body),
+            headers: { "Content-Type": "application/json" },
+          })
+            .then((response) => {
+              if (response.status === 200) {
+                window.location = "/news/<%= post.id%>";
+              } else {
+                window.location = "/?error=couldNotUpdateComment";
+              }
+            })
+            .catch((err) => {
+              console.log(err);
+            });
+        });
+  }
+</script>

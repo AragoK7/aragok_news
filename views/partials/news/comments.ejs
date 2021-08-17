@@ -1,0 +1,16 @@
+<div id="editCommentPlaceholder"></div>
+<h2>Comments</h2>
+<% for(const comment of comments) {%>
+<article class="comment">
+  <p>
+    <span class="author"> <%= comment.username %> </span>
+    <span class="date"> <%= comment.date %> </span>
+  </p>
+  <p><%= comment.comment %></p>
+  <% if(user === comment.username){ %>
+  <button onclick="editComment(event, <%= comment.id %>)">EDIT COMMENT</button>
+  <% } %> <% if(user === comment.username || user_type === 'admin'){ %>
+  <button onclick="deleteComment(<%= comment.id %>)">DELETE COMMENT</button>
+  <% } %>
+</article>
+<% } %> <%- include("../forms/newCommentForm") %>

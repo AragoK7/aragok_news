@@ -1,0 +1,50 @@
+<div>
+  <form
+    id="form-updateUser"
+    action="users"
+    method="PUT"
+    enctype="application/x-www-form-urlencoded"
+  >
+    <label for="username">
+      <input
+        required
+        autocomplete="off"
+        type="text"
+        id="newUsername"
+        name="newUsername"
+        placeholder="New Username"
+      />
+    </label>
+    <label for="currentPassword">
+      <input
+        required
+        autocomplete="off"
+        type="password"
+        id="currentPassword"
+        name="currentPassword"
+        placeholder="Current Password"
+      />
+    </label>
+    <label for="newPassword">
+      <input
+        required
+        autocomplete="off"
+        type="password"
+        id="newPassword"
+        name="newPassword"
+        placeholder="New Password"
+      />
+    </label>
+    <label for="confirmNewPassword">
+      <input
+        required
+        autocomplete="off"
+        type="password"
+        id="confirmNewPassword"
+        name="confirmNewPassword"
+        placeholder="Confirm New Password"
+      />
+    </label>
+    <button id="updateUser" type="submit">Save Changes</button>
+  </form>
+</div>
