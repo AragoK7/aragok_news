@@ -4,6 +4,7 @@
     action="login"
     method="POST"
     enctype="application/x-www-form-urlencoded"
+    onsubmit="handleSubmit(event)"
   >
     <label for="username">
       <input
@@ -25,6 +26,7 @@
         placeholder="Password"
       />
     </label>
+    <label id="error"></label>
     <button type="submit">LOG IN</button>
     <label>Don't have an account?Register <a href="/register">HERE</a></label>
   </form>

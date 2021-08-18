@@ -1,8 +1,6 @@
 const db = require("./database/database.js");
 const makeApp = require("./app.js");
 
-console.log("BEFORE CONNECTING TO DB", db, db.connection, makeApp);
-
 db.dbConnection.connect((err) => {
   if (!err) {
     console.log("Successfully connected to database");

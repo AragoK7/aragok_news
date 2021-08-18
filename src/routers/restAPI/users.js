@@ -39,15 +39,15 @@ router.post(
   async function (req, res) {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
-      return res.status(400).json({ errors: errors.array() });
+      return res.status(200).json({ errors: errors.array() });
     }
     const { username, password, confirmPassword } = req.body;
     try {
       if (password !== confirmPassword)
-        return res.redirect("/register?error=passwordsNotMatching");
+        return res.status(200).json({ message: "Password not matching" });
       const existingUser = await getUser(username);
       if (existingUser)
-        return res.redirect("/register?error=userAlreadyExists");
+        return res.status(200).json({ message: "Username already exists" });
 
       const passHash = await bcrypt.hash(password, 10);
 
@@ -56,9 +56,9 @@ router.post(
       req.session.username = username;
       req.session.user_type = "normal";
 
-      return res.status(201).redirect("/");
+      return res.sendStatus(300);
     } catch (err) {
-      throw err;
+      console.error(err);
     }
   }
 );

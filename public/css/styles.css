@@ -83,6 +83,11 @@ h2 {
 span {
   font-size: 10px;
 }
+#error {
+  text-align: center;
+  color: red;
+}
+
 #form-login,
 #form-register,
 #form-deleteUser,

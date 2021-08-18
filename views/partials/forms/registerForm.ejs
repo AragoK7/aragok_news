@@ -1,8 +1,11 @@
 <div>
-    <form id="form-register" action="users" method="POST" enctype="application/x-www-form-urlencoded">
+    <form id="form-register" action="users" 
+    method="POST" enctype="application/x-www-form-urlencoded"
+     onsubmit="handleSubmit(event)">
         <label for="username">
           <input
           required
+          id="username"
             autocomplete="off"
             type="text"
             name="username"
@@ -11,7 +14,9 @@
         </label>
         <label for="password">
           <input
+
             required
+            id="password"
             autocomplete="off"
             type="password"
             name="password"
@@ -23,10 +28,12 @@
           required
           autocomplete="off"
           type="password"
+          id="confirmPassword"
           name="confirmPassword"
           placeholder="Confirm Password"
         />
           </label>
+          <label id="error"></label>
         <button type="submit">Register</button>
         <label>Already have an account?<a href="login">Log in</a></a></label>
     </form>

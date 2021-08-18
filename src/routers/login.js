@@ -19,6 +19,7 @@ router.post(
     if (!errors.isEmpty()) {
       return res.status(400).send({ errors: errors.array() });
     }
+    console.log("sent");
     const { username, password } = req.body;
     try {
       const result = await getUser(username);
@@ -27,12 +28,12 @@ router.post(
         if (bcrypt.compareSync(password, hashedPassword)) {
           req.session.username = username;
           req.session.user_type = result["user_type"];
-          return res.redirect("/?logIn=success");
+          return res.sendStatus(300);
         } else {
-          return res.redirect("/login?error=wrongPassword");
+          return res.status(200).json({ message: "Wrong Password" });
         }
       } else {
-        return res.redirect("/login?error=userDoesNotExist");
+        return res.status(200).json({ message: "User does not exist" });
       }
     } catch (err) {
       res.json(err);
