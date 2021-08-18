@@ -11,10 +11,7 @@ db.dbConnection.connect((err) => {
   }
 });
 
-console.log("AFTER CONNECTING TO DB");
-console.log("BEFORE makeApp");
 const app = makeApp(db);
-console.log("AFTER makeApp");
 const port = process.env.PORT || 3000;
 
 app.listen(port, () => `aragokNews is listening at port ${port}`);
