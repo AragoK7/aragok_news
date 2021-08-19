@@ -1,61 +1,77 @@
 <%- include("partials/aboveBody") %>
 <div id="outside-container">
-  <%- include("partials/newsHeader") %> <%- include("partials/navbar") %> <%-
-  include("partials/settings/updateUserForm") %> <%-
+  <%- include("partials/newsHeader") %> <%- include("partials/navbar") %>
+  <p id="error"></p>
+  <%- include("partials/settings/updateUserForm") %> <%-
   include("partials/settings/deleteUserForm") %>
 </div>
 <script>
-  document.querySelector("#updateUser").addEventListener("click", function (e) {
-    e.preventDefault();
-    const newUsername = document.querySelector("#newUsername").value;
-    const currentPassword = document.querySelector("#currentPassword").value;
-    const newPassword = document.querySelector("#newPassword").value;
-    const confirmNewPassword = document.querySelector(
-      "#confirmNewPassword"
-    ).value;
-    const body = {
-      newUsername,
-      currentPassword,
-      newPassword,
-      confirmNewPassword,
-    };
-    fetch("/users", {
-      method: "PUT",
-      body: JSON.stringify(body),
-      headers: { "Content-Type": "application/json" },
-    })
-      .then((response) => {
+  function removeErrorDescription() {
+    if (document.querySelector("#error").textContent) {
+      document.querySelector("#error").textContent = "";
+    }
+  }
+  let timer;
+  const clearTimer = () => window.clearInterval(timer);
+  function displayError(msg) {
+    document.querySelector("#error").textContent = msg;
+    timer = window.setTimeout(removeErrorDescription, 2000);
+  }
+
+  document
+    .querySelector("#form-updateUser")
+    .addEventListener("submit", async function (e) {
+      e.preventDefault();
+      clearTimer();
+      const newUsername = document.querySelector("#newUsername").value;
+      const currentPassword = document.querySelector("#currentPassword").value;
+      const newPassword = document.querySelector("#newPassword").value;
+      const confirmNewPassword = document.querySelector(
+        "#confirmNewPassword"
+      ).value;
+      const body = {
+        newUsername,
+        currentPassword,
+        newPassword,
+        confirmNewPassword,
+      };
+      try {
+        const response = await fetch("/users", {
+          method: "PUT",
+          body: JSON.stringify(body),
+          headers: { "Content-Type": "application/json" },
+        });
         if (response.status === 200) {
-          window.location = "/login";
-        } else {
-          window.location = "/settings?error=couldNotUpdateAccount";
+          return (window.location = "/login");
         }
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  });
-</script>
-<script>
-  document.querySelector("#deleteUser").addEventListener("click", function (e) {
-    e.preventDefault();
-    const password = document.querySelector("#deleteUserPassword").value;
-    const body = { password };
-    fetch("/users", {
-      method: "DELETE",
-      body: JSON.stringify(body),
-      headers: { "Content-Type": "application/json" },
-    })
-      .then((response) => {
+        const { message } = await response.json();
+        displayError(message);
+      } catch (err) {
+        displayError(err.message);
+      }
+    });
+
+  document
+    .querySelector("#form-deleteUser")
+    .addEventListener("submit", async function (e) {
+      e.preventDefault();
+      clearTimer();
+      const password = document.querySelector("#deleteUserPassword").value;
+      const body = { password };
+      try {
+        const response = await fetch("/users", {
+          method: "DELETE",
+          body: JSON.stringify(body),
+          headers: { "Content-Type": "application/json" },
+        });
         if (response.status === 200) {
-          window.location = "/login";
-        } else {
-          window.location = "/settings?error=couldNotDeleteAccount";
+          return (window.location = "/login");
         }
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  });
+        const { message } = await response.json();
+        displayError(message);
+      } catch (err) {
+        displayError(err.message);
+      }
+    });
 </script>
 <%- include("partials/bellowBody") %>

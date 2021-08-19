@@ -28,12 +28,12 @@ router.post(
         if (bcrypt.compareSync(password, hashedPassword)) {
           req.session.username = username;
           req.session.user_type = result["user_type"];
-          return res.sendStatus(300);
+          return res.sendStatus(200);
         } else {
-          return res.status(200).json({ message: "Wrong Password" });
+          return res.status(400).json({ message: "Wrong Password" });
         }
       } else {
-        return res.status(200).json({ message: "User does not exist" });
+        return res.status(400).json({ message: "User does not exist" });
       }
     } catch (err) {
       res.json(err);

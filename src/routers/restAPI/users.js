@@ -39,15 +39,15 @@ router.post(
   async function (req, res) {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
-      return res.status(200).json({ errors: errors.array() });
+      return res.status(400).json({ errors: errors.array() });
     }
     const { username, password, confirmPassword } = req.body;
     try {
       if (password !== confirmPassword)
-        return res.status(200).json({ message: "Password not matching" });
+        return res.status(400).json({ message: "Password not matching" });
       const existingUser = await getUser(username);
       if (existingUser)
-        return res.status(200).json({ message: "Username already exists" });
+        return res.status(400).json({ message: "Username already exists" });
 
       const passHash = await bcrypt.hash(password, 10);
 
@@ -56,9 +56,9 @@ router.post(
       req.session.username = username;
       req.session.user_type = "normal";
 
-      return res.sendStatus(300);
+      return res.sendStatus(200);
     } catch (err) {
-      console.error(err);
+      return res.json(err);
     }
   }
 );
@@ -80,24 +80,31 @@ router.put(
     const { newUsername, currentPassword, newPassword, confirmNewPassword } =
       req.body;
 
-    if (newPassword !== confirmNewPassword)
-      return res.redirect("/register?error=passwordsNotMatching");
     try {
-      const result = await getUser(req.session.username);
-      if (bcrypt.compareSync(currentPassword, result.password)) {
+      if (newUsername !== req.session.username) {
+        console.log("different usernames");
+        const existingUser = await getUser(newUsername);
+        if (existingUser)
+          return res.status(400).json({ message: "Username already taken" });
+      }
+      if (newPassword !== confirmNewPassword)
+        return res.status(400).json({ message: "Passwords not matching" });
+      const user = await getUser(req.session.username);
+      if (bcrypt.compareSync(currentPassword, user.password)) {
         const passHash = await bcrypt.hash(newPassword, 10);
         await updateUser(req.session.username, passHash, newUsername);
         req.session.destroy((err) => {
           if (err) {
-            return res.redirect("/?success=false");
+            throw new Error("Could not destroy session");
           }
+          // All good
           return res.sendStatus(200);
         });
       } else {
-        return res.redirect("/settings?error=wrongPassword");
+        return res.status(400).json({ message: "Incorrect Password" });
       }
     } catch (err) {
-      throw err;
+      return res.json(err);
     }
   }
 );
@@ -120,11 +127,12 @@ router.delete(
         await deleteUser(req.session.username);
         req.session.destroy((err) => {
           if (err) {
-            return res.redirect("/");
+            throw err;
           }
         });
         return res.sendStatus(200);
       }
+      return res.status(400).json({ message: "Incorrect Password" });
     } catch (err) {
       return res.json(err);
     }
