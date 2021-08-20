@@ -1,0 +1,18 @@
+<script>
+  // DELETE COMMENT
+  function deleteComment(commentId) {
+    fetch(`/comments/${commentId}`, {
+      method: "DELETE",
+    })
+      .then((response) => {
+        if (response.status === 200) {
+          window.location = "/news/<%= post.id%>";
+        } else {
+          window.location = "/?error=couldNotDeleteComment";
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }
+</script>

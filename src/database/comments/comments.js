@@ -8,9 +8,13 @@ async function getAllPostComments(postId) {
     .query("SELECT * FROM comments_news WHERE post_id = ?", [postId]);
 }
 async function getCommentById(commentId) {
-  return dbConnection
+  const result = await dbConnection
     .promise()
     .query("SELECT * FROM comments_news WHERE id = ? ", [commentId]);
+  if (!(result && result[0])) {
+    throw new Error("Error trying to get news");
+  }
+  return result[0][0];
 }
 async function createComment(username, commentId, comment) {
   return dbConnection

@@ -31,16 +31,4 @@ router.get("/:id", async function (req, res) {
   }
 });
 
-router.post("/:id", redirectLogin, async function (req, res) {
-  const { comment } = req.body;
-  const { id } = req.params;
-  const { username } = req.session;
-  try {
-    const result = await createComment(username, id, comment);
-    return res.redirect("/");
-  } catch (err) {
-    return res.json({ err });
-  }
-});
-
 module.exports = router;

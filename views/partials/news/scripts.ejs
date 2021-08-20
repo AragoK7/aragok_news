@@ -1,0 +1,17 @@
+<% if(typeof user_type != 'undefined' && user_type === 'admin'){ %> <%-
+include("./scripts/adminOnly")%> <% } %>
+<script>
+  let timer;
+  const clearTimer = () => window.clearInterval(timer);
+  function removeErrorDescription() {
+    if (document.querySelector("#error").textContent) {
+      document.querySelector("#error").textContent = "";
+    }
+  }
+  function displayError(msg) {
+    document.querySelector("#error").textContent = msg;
+    timer = window.setTimeout(removeErrorDescription, 3000);
+  }
+</script>
+<%- include("./scripts/newComment")%> <%- include("./scripts/deleteComment")%>
+<%- include("./scripts/updateComment")%>

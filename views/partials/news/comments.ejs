@@ -6,7 +6,7 @@
     <span class="author"> <%= comment.username %> </span>
     <span class="date"> <%= comment.date %> </span>
   </p>
-  <p><%= comment.comment %></p>
+  <pre class="comment-content"><%= comment.comment %></pre>
   <% if(user === comment.username){ %>
   <button onclick="editComment(event, <%= comment.id %>)">EDIT COMMENT</button>
   <% } %> <% if(user === comment.username || user_type === 'admin'){ %>

@@ -1,0 +1,56 @@
+<script>
+  // UPDATE COMMENT
+  function editComment(e, commentId) {
+    const currentComment = e.target.previousElementSibling.textContent;
+    function populateComment() {
+      document.querySelector("#comment").value = currentComment;
+    }
+    const html = `
+              <form
+              id="form-editComment"
+                action="comments/${commentId}"
+                method="PUT"
+                enctype="application/x-www-form-urlencoded"
+              >
+                <label for="comment">
+                  <textarea id="comment" required name="comment" cols="100" rows="5"></textarea>
+                </label>
+
+                <button  type="submit">Save edit</button>
+              </form>
+            `;
+    document.querySelector("#editCommentPlaceholder").innerHTML = html;
+    populateComment();
+
+    document.querySelector("#form-editComment") &&
+      document
+        .querySelector("#form-editComment")
+        .addEventListener("submit", async function (e) {
+          e.preventDefault();
+          const body = {
+            comment: document.querySelector("#comment").value,
+          };
+          try {
+            if (body.comment.length > 255) {
+              throw new Error(
+                `Your message is too long. Maximum of 255 characters allowed(Your comment had ${body.comment.length} characters)`
+              );
+            }
+            if (body.comment === currentComment) {
+              throw new Error("No changes were made");
+            }
+            const response = await fetch(`/comments/${commentId}`, {
+              method: "PUT",
+              body: JSON.stringify(body),
+              headers: { "Content-Type": "application/json" },
+            });
+
+            if (response.status === 200) return location.reload();
+            const { message } = await response.json();
+            displayError(message);
+          } catch (err) {
+            displayError(err.message);
+          }
+        });
+  }
+</script>

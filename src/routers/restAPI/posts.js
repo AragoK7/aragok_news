@@ -1,7 +1,10 @@
 const express = require("express");
 const router = express.Router();
 
-const { redirectLogin } = require("../../authentication.js");
+const {
+  redirectLogin,
+  redirectRestricted,
+} = require("../../authentication.js");
 const { check, validationResult } = require("express-validator");
 const {
   createPost,
@@ -58,19 +61,21 @@ router.put(
     const { newTitle, newContent } = req.body;
     try {
       const result = await updatePost(newTitle, newContent, req.params.postId);
-      res.sendStatus(200);
+      return res.sendStatus(200);
     } catch (err) {
-      throw err;
+      res.status(500).json({ message: "Server error" });
     }
   }
 );
 
-router.delete("/:id", redirectLogin, async function (req, res) {
+router.delete("/:id", redirectRestricted, async function (req, res) {
   try {
     const result = await deletePost(req.params.id);
+    if (result !== true)
+      res.status(400).json({ message: "Could not delete post" });
     return res.sendStatus(200);
   } catch (err) {
-    throw err;
+    res.status(500).json({ message: "Server error" });
   }
 });
 

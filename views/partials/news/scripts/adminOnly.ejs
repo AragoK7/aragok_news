@@ -1,0 +1,87 @@
+<script>
+  // DELETE POST
+  document.querySelector("#deletePost") &&
+    document
+      .querySelector("#deletePost")
+      .addEventListener("click", async function () {
+        clearTimer();
+        try {
+          const response = await fetch("/posts/<%= post.id %>", {
+            method: "DELETE",
+          });
+          if (response.status === 200) {
+            return (window.location = "/");
+          }
+          const { message } = await response.json();
+          displayError(message);
+        } catch (err) {
+          displayError(err.message);
+        }
+      });
+  // UPDATE POST
+  function populateInputs() {
+    document.querySelector("#title").value = "<%= post.title%>";
+    document.querySelector("#content").value = "<%= post.content%>";
+    const currentTitle = document.querySelector("#title").value;
+    const currentContent = document.querySelector("#content").value;
+    document
+      .querySelector("#saveEdit")
+      .addEventListener("click", async function (e) {
+        e.preventDefault();
+        clearTimer();
+
+        const newTitle = document.querySelector("#title").value;
+        const newContent = document.querySelector("#content").value;
+
+        const body = {
+          newTitle,
+          newContent,
+        };
+        try {
+          if (
+            body.newTitle === currentTitle &&
+            body.newContent === currentContent
+          ) {
+            throw new Error("No changes were made");
+          }
+          const response = await fetch("/posts/<%= post.id%>", {
+            method: "PUT",
+            body: JSON.stringify(body),
+            headers: { "Content-Type": "application/json" },
+          });
+
+          if (response.status === 200) {
+            return location.reload();
+          }
+          const { message } = await response.json();
+          displayError(message);
+        } catch (err) {
+          displayError(err.message);
+        }
+      });
+  }
+  function insertForm() {
+    const html = `
+                <form
+                  action="posts/<%= post.id %>"
+                  method="PUT"
+                  enctype="application/x-www-form-urlencoded"
+                >
+                  <label for="title">
+                    <input id="title" type="text" name="title" required/>
+                  </label>
+
+                  <label for="content">
+                    <textarea id="content" required name="content" cols="100" rows="5"></textarea>
+                  </label>
+
+                  <button id="saveEdit" type="submit">Save edit</button>
+                </form>
+              `;
+    document.querySelector("#editSpace").innerHTML = html;
+    populateInputs();
+  }
+  // INSERT UPDATE FORM
+  document.querySelector("#editPost") &&
+    document.querySelector("#editPost").addEventListener("click", insertForm);
+</script>

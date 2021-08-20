@@ -82,7 +82,6 @@ router.put(
 
     try {
       if (newUsername !== req.session.username) {
-        console.log("different usernames");
         const existingUser = await getUser(newUsername);
         if (existingUser)
           return res.status(400).json({ message: "Username already taken" });

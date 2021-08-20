@@ -36,9 +36,13 @@ router.post(
       return res.status(400).send({ errors: errors.array() });
     }
     const { postId, comment } = req.body;
+    if (comment.length > 255)
+      return res.status(400).json({
+        message: `Your message is too long. Maximum of 255 characters allowed(Your comment had ${comment.length} characters)`,
+      });
     const { username } = req.session;
     try {
-      const result = await createComment(username, postId, comment);
+      await createComment(username, postId, comment);
       return res.redirect(`/news/${postId}`);
     } catch (err) {
       res.sendStatus(400);
@@ -52,22 +56,22 @@ router.put(
   [check("comment").notEmpty()],
   async function (req, res) {
     const { comment } = req.body;
+    if (comment.length > 255)
+      return res.status(400).json({
+        message: `Your message is too long. Maximum of 255 characters allowed(Your comment had ${comment.length} characters)`,
+      });
     try {
       const getCommentByIdResult = await getCommentById(req.params.commentId);
-      if (
-        getCommentByIdResult &&
-        getCommentByIdResult[0] &&
-        getCommentByIdResult[0][0]
-      ) {
-        if (getCommentByIdResult[0][0].username !== req.session.username) {
-          return res.sendStatus(401);
+      if (getCommentByIdResult) {
+        if (getCommentByIdResult.username !== req.session.username) {
+          return res.status(401).json({ message: "Unauthorized action" });
         }
-        const result = await updateComment(comment, req.params.commentId);
+        await updateComment(comment, req.params.commentId);
         return res.sendStatus(200);
       }
-      return res.sendStatus(404);
+      return res.status(404).json({ message: "Could not find your comment" });
     } catch (err) {
-      res.sendStatus(400);
+      return res.json(err);
     }
   }
 );
@@ -75,24 +79,20 @@ router.put(
 router.delete("/:commentId", redirectLogin, async function (req, res) {
   try {
     const getCommentByIdResult = await getCommentById(req.params.commentId);
-    if (
-      getCommentByIdResult &&
-      getCommentByIdResult[0] &&
-      getCommentByIdResult[0][0]
-    ) {
+    if (getCommentByIdResult) {
       if (
-        getCommentByIdResult[0][0].username === req.session.username ||
+        getCommentByIdResult.username === req.session.username ||
         req.session.user_type === "admin"
       ) {
         const result = await deleteComment(req.params.commentId);
         return res.sendStatus(200);
       }
-      return res.sendStatus(401);
+      return res.status(401).json("Unauthorized action");
     } else {
-      return res.sendStatus(404);
+      return res.status(404).json({ message: "Could not find your comment" });
     }
   } catch (err) {
-    throw err;
+    return res.json(err);
   }
 });
 

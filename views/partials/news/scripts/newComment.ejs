@@ -1,0 +1,30 @@
+<script>
+  // NEW COMMENT
+  async function handleNewComment(e) {
+    e.preventDefault();
+    clearTimer();
+
+    const body = {
+      postId: document.querySelector("#postId").value,
+      comment: document.querySelector("#newComment").value,
+    };
+    try {
+      if (body.comment.length > 255) {
+        throw new Error(
+          `Your message is too long. Maximum of 255 characters allowed(Your comment had ${body.comment.length} characters)`
+        );
+      }
+      const response = await fetch("/comments", {
+        method: "POST",
+        body: JSON.stringify(body),
+        headers: { "Content-Type": "application/json" },
+      });
+
+      if (response.status === 200) return location.reload();
+      const { message } = await response.json();
+      displayError(message);
+    } catch (err) {
+      displayError(err.message);
+    }
+  }
+</script>

@@ -9,6 +9,21 @@ async function getPost(id) {
     .promise()
     .query("SELECT * FROM `posts_news` WHERE `id` = ?", [id]);
 }
+async function get10LatestNews() {
+  const result = await dbConnection
+    .promise()
+    .query("SELECT * FROM posts_news ORDER BY `date` DESC LIMIT 10 ");
+  if (!(result && result[0])) {
+    // Returns an array of null
+    throw new Error("Error trying to get news");
+  }
+  // undefined means there are no news
+  if (!(result[0].length > 0)) {
+    return undefined;
+  }
+  // returns an array of news
+  return result[0];
+}
 async function createPost(username, title, content) {
   return dbConnection
     .promise()
@@ -27,25 +42,14 @@ async function updatePost(title, content, id) {
   );
 }
 async function deletePost(id) {
-  return dbConnection
-    .promise()
-    .query("DELETE FROM posts_news WHERE id = ?", [id]);
-}
-
-async function get10LatestNews() {
   const result = await dbConnection
     .promise()
-    .query("SELECT * FROM posts_news ORDER BY `date` DESC LIMIT 10 ");
-  if (!(result && result[0])) {
-    // Returns an array of null
-    throw new Error("Error trying to get news");
-  }
-  // undefined means there are no news
-  if (!(result[0].length > 0)) {
-    return undefined;
-  }
-  // returns an array of news
-  return result[0];
+    .query("DELETE FROM posts_news WHERE id = ?", [id], function (err, smth) {
+      console.log(err);
+      if (err) throw new Error("Error while trying to delete post");
+    });
+  if (result[0]?.affectedRows === 1) return true;
+  return false;
 }
 
 module.exports = {

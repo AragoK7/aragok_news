@@ -19,7 +19,6 @@ router.post(
     if (!errors.isEmpty()) {
       return res.status(400).send({ errors: errors.array() });
     }
-    console.log("sent");
     const { username, password } = req.body;
     try {
       const result = await getUser(username);
@@ -30,7 +29,7 @@ router.post(
           req.session.user_type = result["user_type"];
           return res.sendStatus(200);
         } else {
-          return res.status(400).json({ message: "Wrong Password" });
+          return res.status(400).json({ message: "Incorrect Password" });
         }
       } else {
         return res.status(400).json({ message: "User does not exist" });

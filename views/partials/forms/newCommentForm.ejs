@@ -7,11 +7,18 @@
     action="/comments"
     method="POST"
     enctype="application/x-www-form-urlencoded"
+    onsubmit="handleNewComment(event)"
   >
-    <input type="text" hidden name="postId" value="<%= post.id %>" />
+    <input
+      id="postId"
+      type="text"
+      hidden
+      name="postId"
+      value="<%= post.id %>"
+    />
     <textarea
       name="comment"
-      id="comment"
+      id="newComment"
       cols="50"
       rows="5"
       required
