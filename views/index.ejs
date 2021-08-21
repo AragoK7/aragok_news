@@ -1,7 +1,7 @@
 <%- include("partials/aboveBody") %>
 <div id="outside-container">
   <%- include("partials/newsHeader") %> <%- include("partials/navbar") %>
-  <section>
+  <section id="section-posts">
     <% if(typeof content != 'undefined'){ %> <% for(const news of content) {%>
     <article>
       <div class="author_date">
@@ -13,5 +13,46 @@
     <p id="noNews">...There are currently no news...</p>
     <% } %>
   </section>
+  <p id="error"></p>
+  <button id="load-more-news" onclick="loadMoreNews()">...more news...</button>
+  <script>
+    let timer;
+    const clearTimer = () => window.clearInterval(timer);
+    function removeErrorDescription() {
+      if (document.querySelector("#error").textContent) {
+        document.querySelector("#error").textContent = "";
+      }
+    }
+    function displayError(msg) {
+      document.querySelector("#error").textContent = msg;
+      timer = window.setTimeout(removeErrorDescription, 3000);
+    }
+    let page = 1;
+    async function loadMoreNews() {
+      clearTimer();
+      try {
+        const response = await fetch(`/posts/getMoreNews/${page}`);
+
+        const data = await response.json();
+        console.log(data);
+        if (typeof data === "string") throw new Error("No more news...");
+        const section = document.querySelector("#section-posts");
+        data.forEach((post) => {
+          const html = `
+          <article>
+          <div class="author_date">
+            <span class="date"> ${post.date} </span>
+          </div>
+          <a href="news/${post.id}"><h1>${post.title}</h1></a>
+        </article>
+      `;
+          section.insertAdjacentHTML("beforeend", html);
+        });
+        page++;
+      } catch (err) {
+        displayError(err.message);
+      }
+    }
+  </script>
 </div>
 <%- include("partials/bellowBody") %>

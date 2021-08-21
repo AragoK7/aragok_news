@@ -2,6 +2,7 @@ const mysql = require("mysql2");
 
 const { getDate } = require("../../helpers/functions");
 const { dbConnection } = require("../database.js");
+const newsPerLoad = Number(process.env.NEWS_PER_LOAD);
 
 ///////////////////////////////////////////////////////
 async function getPost(id) {
@@ -9,10 +10,14 @@ async function getPost(id) {
     .promise()
     .query("SELECT * FROM `posts_news` WHERE `id` = ?", [id]);
 }
-async function get10LatestNews() {
+async function getNPosts(page = 0) {
+  const lowerLimit = page * newsPerLoad;
   const result = await dbConnection
     .promise()
-    .query("SELECT * FROM posts_news ORDER BY `date` DESC LIMIT 10 ");
+    .query("SELECT * FROM posts_news ORDER BY `date` DESC LIMIT ?,? ", [
+      lowerLimit,
+      newsPerLoad,
+    ]);
   if (!(result && result[0])) {
     // Returns an array of null
     throw new Error("Error trying to get news");
@@ -57,5 +62,5 @@ module.exports = {
   createPost,
   updatePost,
   deletePost,
-  get10LatestNews,
+  getNPosts,
 };

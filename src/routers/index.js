@@ -1,10 +1,9 @@
 const express = require("express");
 const router = express.Router();
-
-const { get10LatestNews } = require("../database/posts/posts.js");
+const { getNPosts } = require("../database/posts/posts.js");
 router.get("/", async function (req, res) {
   try {
-    const result = await get10LatestNews();
+    const result = await getNPosts(0);
     return res.render("index", {
       content: result,
       user: req.session.username,

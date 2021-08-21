@@ -1,8 +1,9 @@
-* {
+*,
+*::before,
+*::after {
   margin: 0;
-}
-:root {
-  --navbar-separator--color: green;
+  padding: 0;
+  box-sizing: border-box;
 }
 body {
   color: white;
@@ -18,7 +19,7 @@ a {
 }
 #outside-container {
   margin: auto;
-  width: 1024px;
+  width: 1000px;
   background: #5c3d2e;
   min-height: 100vh;
 }
@@ -53,8 +54,7 @@ article {
   margin-top: 28px;
 }
 section {
-  padding-left: 20px;
-  padding-right: 20px;
+  padding: 0 20px 20px;
 }
 #section-comments {
   margin-top: 60px;
@@ -68,6 +68,11 @@ section {
   border-radius: 4px;
   margin: 8px;
   padding: 8px;
+}
+#load-more-news {
+  display: block;
+  margin: auto;
+  padding: 2px;
 }
 h1 {
   font-size: 32px;
@@ -149,5 +154,8 @@ form {
   }
   h2 {
     font-size: 20px;
+  }
+  span {
+    font-size: 8px;
   }
 }

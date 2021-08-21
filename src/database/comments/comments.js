@@ -1,5 +1,6 @@
 const { getDate } = require("../../helpers/functions");
 const { dbConnection } = require("../database.js");
+const commentsPerPost = Number(process.env.COMMENTS_PER_POST);
 
 ///////////////////////////////////////////////////////
 async function getAllPostComments(postId) {
@@ -7,6 +8,19 @@ async function getAllPostComments(postId) {
     .promise()
     .query("SELECT * FROM comments_news WHERE post_id = ?", [postId]);
 }
+async function getNPostComments(postId, page = 0) {
+  const lowerLimit = page * commentsPerPost;
+  console.log(postId, page, lowerLimit);
+  const result = await dbConnection
+    .promise()
+    .query(
+      "SELECT * FROM comments_news WHERE post_id = ? ORDER BY `date` DESC LIMIT ?, ?",
+      [postId, lowerLimit, commentsPerPost]
+    );
+  console.log(result);
+  return result;
+}
+
 async function getCommentById(commentId) {
   const result = await dbConnection
     .promise()
@@ -40,6 +54,7 @@ async function deleteComment(commentId) {
 
 module.exports = {
   getAllPostComments,
+  getNPostComments,
   getCommentById,
   createComment,
   updateComment,

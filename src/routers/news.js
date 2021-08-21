@@ -5,6 +5,7 @@ const { redirectLogin } = require("../authentication.js");
 const { getPost } = require("../database/posts/posts.js");
 const {
   getAllPostComments,
+  getNPostComments,
   createComment,
 } = require("../database/comments/comments.js");
 
@@ -15,7 +16,7 @@ router.get("/:id", async function (req, res) {
       return res.sendStatus(404);
     }
     const [[post]] = result;
-    const result2 = await getAllPostComments(req.params.id);
+    const result2 = await getNPostComments(req.params.id, 0);
     if (!result2) {
       return res.sendStatus(400);
     }

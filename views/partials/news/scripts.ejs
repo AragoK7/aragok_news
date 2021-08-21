@@ -12,6 +12,51 @@ include("./scripts/adminOnly")%> <% } %>
     document.querySelector("#error").textContent = msg;
     timer = window.setTimeout(removeErrorDescription, 3000);
   }
+  let page = 1;
+  const commentsSection = document.querySelector("#comments-only");
+
+  const loggedInUser =
+    document.querySelector("#loggedInUser") &&
+    document.querySelector("#loggedInUser").textContent;
+  const loggedInUserType =
+    document.querySelector("#loggedInUserType") &&
+    document.querySelector("#loggedInUserType").textContent;
+
+  async function loadMoreComments() {
+    try {
+      const response = await fetch(`/comments/<%= post.id%>/${page}`);
+      const data = await response.json();
+      console.log(loggedInUser, loggedInUserType);
+
+      data.forEach((comment) => {
+        const html = `
+          <article class="comment">
+      <p>
+        <span class="author"> ${comment.username} </span>
+        <span class="date"> ${comment.date} </span>
+      </p>
+      <pre class="comment-content">${comment.comment}</pre>
+      ${
+        loggedInUser === comment.username
+          ? `
+          <button onclick="editComment(event, ${comment.id})">EDIT COMMENT</button>
+          `
+          : ""
+      }
+      ${
+        loggedInUser === comment.username || loggedInUserType === "admin"
+          ? `
+          <button onclick="deleteComment(${comment.id})">DELETE COMMENT</button>
+          `
+          : ""
+      }
+    </article>
+    `;
+        commentsSection.insertAdjacentHTML("beforeend", html);
+      });
+      page++;
+    } catch (err) {}
+  }
 </script>
 <%- include("./scripts/newComment")%> <%- include("./scripts/deleteComment")%>
 <%- include("./scripts/updateComment")%>

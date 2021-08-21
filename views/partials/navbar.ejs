@@ -14,6 +14,7 @@
     <a href="/newArticle"><li>NEW ARTICLE</li></a>
     <% } %> <% if(typeof user_type != 'undefined'){%>
     <li id="loggedInUser"><%= user %></li>
+    <li hidden id="loggedInUserType"><%= user_type %></li>
     <% } %>
   </ul>
 </nav>

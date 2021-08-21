@@ -10,6 +10,7 @@ const {
   createPost,
   deletePost,
   updatePost,
+  getNPosts,
 } = require("../../database/posts/posts.js");
 
 router.get("/:postId", async (req, res) => {
@@ -26,6 +27,16 @@ router.get("/", async (req, res) => {
     return res.send(result[0]);
   }
   return res.send({ error: "No posts found" });
+});
+
+router.get("/getMoreNews/:page", async (req, res) => {
+  try {
+    const result = await getNPosts(Number(req.params.page));
+    if (!result) throw new Error("No more news");
+    return res.json(result);
+  } catch (err) {
+    return res.json(err.message);
+  }
 });
 
 router.post(

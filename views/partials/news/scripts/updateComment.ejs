@@ -4,6 +4,7 @@
     const currentComment = e.target.previousElementSibling.textContent;
     function populateComment() {
       document.querySelector("#comment").value = currentComment;
+      document.querySelector("#comment").focus();
     }
     const html = `
               <form

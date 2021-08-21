@@ -4,14 +4,24 @@ const router = express.Router();
 const { redirectLogin } = require("../../authentication.js");
 const { check, validationResult } = require("express-validator");
 const {
+  getNPostComments,
   createComment,
   getCommentById,
   updateComment,
   deleteComment,
 } = require("../../database/comments/comments.js");
 
+router.get("/:postId/:page", async (req, res) => {
+  const page = Number(req.params.page);
+  const result = await getNPostComments(req.params.postId, page);
+  if (result && result[0]) {
+    return res.send(result[0]);
+  }
+  return res.send({ error: "No posts found" });
+});
+
 router.get("/:postId", async (req, res) => {
-  const result = await getAllPosts();
+  const result = await getNPostComments(req.params.postId, 0);
   if (result && result[0]) {
     return res.send(result[0]);
   }

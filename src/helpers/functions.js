@@ -1,5 +1,5 @@
 function getDate() {
-  return Date().toString().split(" ").slice(0, 6).join(" ");
+  return new Date().toUTCString();
 }
 
 module.exports = {
