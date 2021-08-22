@@ -7,7 +7,9 @@
       <div class="author_date">
         <span class="date"> <%= news.date %> </span>
       </div>
-      <a href="news/<%= news.id%>"><h1><%= news.title%></h1></a>
+      <a href="news/<%= news.id%>"
+        ><h1 class="post-title"><%= news.title%></h1></a
+      >
     </article>
     <% } %> <% } else{ %>
     <p id="noNews">...There are currently no news...</p>
