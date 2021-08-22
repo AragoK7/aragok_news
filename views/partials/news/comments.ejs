@@ -8,14 +8,18 @@
       <span class="author"> <%= comment.username %> </span>
       <span class="date"> <%= comment.date %> </span>
     </p>
-    <span class="comment-content"><%= comment.comment %></span>
-    <% if(user === comment.username){ %>
-    <button onclick="editComment(event, <%= comment.id %>)">
-      EDIT COMMENT
-    </button>
-    <% } %> <% if(user === comment.username || user_type === 'admin'){ %>
-    <button onclick="deleteComment(<%= comment.id %>)">DELETE COMMENT</button>
-    <% } %>
+    <p class="comment-content"><%= comment.comment %></p>
+    <div>
+      <% if(user === comment.username){ %>
+
+      <button onclick="editComment(event, <%= comment.id %>)">
+        EDIT COMMENT
+      </button>
+      <% } %> <% if(user === comment.username || user_type === 'admin'){ %>
+      <button onclick="deleteComment(<%= comment.id %>)">DELETE COMMENT</button>
+
+      <% } %>
+    </div>
   </article>
   <% } %>
 </section>

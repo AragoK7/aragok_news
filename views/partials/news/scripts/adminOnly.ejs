@@ -6,7 +6,7 @@
       .addEventListener("click", async function () {
         clearTimer();
         try {
-          const response = await fetch("/posts/<%= post.id %>", {
+          const response = await fetch(`/posts/<%= post.id %>`, {
             method: "DELETE",
           });
           if (response.status === 200) {
@@ -44,7 +44,7 @@
           ) {
             throw new Error("No changes were made");
           }
-          const response = await fetch("/posts/<%= post.id%>", {
+          const response = await fetch(`/posts/<%= post.id%>`, {
             method: "PUT",
             body: JSON.stringify(body),
             headers: { "Content-Type": "application/json" },

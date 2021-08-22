@@ -35,14 +35,15 @@ include("./scripts/adminOnly")%> <% } %>
         <span class="author"> ${comment.username} </span>
         <span class="date"> ${comment.date} </span>
       </p>
-      <pre class="comment-content">${comment.comment}</pre>
-      ${
-        loggedInUser === comment.username
-          ? `
+      <p class="comment-content">${comment.comment}</p>
+      <div>
+        ${
+          loggedInUser === comment.username
+            ? `
           <button onclick="editComment(event, ${comment.id})">EDIT COMMENT</button>
           `
-          : ""
-      }
+            : ""
+        }
       ${
         loggedInUser === comment.username || loggedInUserType === "admin"
           ? `
@@ -50,6 +51,7 @@ include("./scripts/adminOnly")%> <% } %>
           `
           : ""
       }
+      </div>
     </article>
     `;
         commentsSection.insertAdjacentHTML("beforeend", html);
