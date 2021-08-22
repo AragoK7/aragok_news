@@ -1,3 +1,4 @@
+/* CLEAR PROPERTIES */
 *,
 *::before,
 *::after {
@@ -5,14 +6,67 @@
   padding: 0;
   box-sizing: border-box;
 }
+a {
+  text-decoration: none;
+}
+/* /////////////////////////////////////////////// */
+/* ALL PAGES */
+
+/* NAVBAR */
+.banner-center {
+  display: block;
+  width: 100%;
+}
+nav {
+  background: #b85c38;
+}
+ul {
+  margin: 0;
+  display: flex;
+  list-style-type: none;
+  flex-direction: row-reverse;
+  align-items: center;
+  padding-left: 8px;
+}
+ul > a > li {
+  font-size: 20px;
+  margin: 0 8px;
+  color: black;
+}
+ul > a {
+  border-left: 2px #e0c097 solid;
+  text-decoration: none;
+}
+ul #loggedInUser {
+  flex-grow: 1;
+}
+/* ////// */
 html {
   color: white;
   background: #2d2424;
-  margin: 0;
-  padding: 0;
-  border: 0;
   font-family: Arial, Helvetica, sans-serif;
 }
+#outside-container {
+  margin: auto;
+  width: 1000px;
+  background: #5c3d2e;
+  min-height: 100vh;
+}
+#outside-container a {
+  color: lightblue;
+}
+
+.title {
+  font-size: 28px;
+}
+.author {
+  font-size: 12px;
+}
+.date {
+  text-align: right;
+  font-size: 10px;
+}
+/* ////////////////////////////////////////////// */
 /* INDEX ONLY */
 #section-posts {
   margin: 4px;
@@ -23,11 +77,17 @@ html {
   padding: 2px 4px;
   margin: 6px 0;
 }
-#section-posts h1 {
-  font-size: 28px;
+.post-title {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
-/* /////////////// */
-/* POST */
+/* /////////////////////////////////////////// */
+/* NEWS ONLY */
+#post-title {
+  white-space: pre-wrap;
+  overflow-wrap: break-word;
+}
 #section-post {
   background-color: #b85c38;
   border-radius: 4px;
@@ -44,47 +104,26 @@ html {
 .comment p:nth-of-type(2) {
   padding-top: 2px;
 }
-/* ///////////// */
-a {
-  text-decoration: none;
-  color: lightblue;
+.comment-content {
+  background-color: #a05030;
+  padding: 2px;
+  border-radius: 4px;
+  margin-top: 6px;
+  max-height: 92px;
+  overflow: auto;
+  white-space: pre-wrap;
+  overflow-wrap: break-word;
 }
-#outside-container {
-  margin: auto;
-  width: 1000px;
-  background: #5c3d2e;
-  min-height: 100vh;
-}
-.banner-center {
-  display: block;
-  width: 100%;
-}
-nav {
-  background: #b85c38;
-}
-ul {
-  margin: 0;
-  display: flex;
-  list-style-type: none;
-  flex-direction: row-reverse;
-  align-items: center;
-  padding-left: 8px;
-}
-ul a li {
+.post-content {
+  background-color: #a05030;
+  padding: 2px;
+  border-radius: 4px;
+  margin-top: 6px;
+  white-space: pre-wrap;
+  overflow-wrap: break-word;
   font-size: 20px;
-  margin: 0 8px;
-  color: black;
 }
-ul a {
-  border-left: 2px #e0c097 solid;
-  text-decoration: none;
-}
-ul #loggedInUser {
-  flex-grow: 1;
-}
-article {
-  margin-top: 28px;
-}
+/* ////////////////////////////////////////// */
 
 #load-more-news {
   display: block;
@@ -92,12 +131,6 @@ article {
   padding: 2px;
 }
 
-.date {
-  float: right;
-}
-span {
-  font-size: 10px;
-}
 #error {
   font-size: 20px;
   text-align: center;
@@ -136,26 +169,6 @@ form {
   padding: 4px;
   border-radius: 4px;
 }
-.comment-content {
-  width: 100%;
-  max-height: 96px;
-  overflow: auto;
-  white-space: pre-wrap;
-  overflow-wrap: break-word;
-}
-.post-content {
-  white-space: pre-wrap;
-  overflow-wrap: break-word;
-}
-.post-title {
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-}
-#post-title {
-  white-space: pre-wrap;
-  overflow-wrap: break-word;
-}
 
 @media only screen and (max-width: 1000px) {
   #outside-container {
@@ -164,18 +177,34 @@ form {
 }
 
 @media only screen and (max-width: 720px) {
-  ul a li {
+  ul > a > li {
     font-size: 14px;
     margin: 0 2px;
   }
-  h1 {
-    font-size: 24px;
-    margin: 0 0 4px;
+  .title {
+    font-size: 22px;
   }
-  h2 {
+  .post-content {
+    font-size: 18px;
+  }
+  .comment-content {
+    font-size: 16px;
+    max-height: 74px;
+  }
+}
+@media only screen and (max-width: 520px) {
+  ul > a > li {
+    font-size: 14px;
+    margin: 0 2px;
+  }
+  .title {
     font-size: 20px;
   }
-  span {
-    font-size: 8px;
+  .post-content {
+    font-size: 16px;
+  }
+  .comment-content {
+    font-size: 14px;
+    max-height: 66px;
   }
 }

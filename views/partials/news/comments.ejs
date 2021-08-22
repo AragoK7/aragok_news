@@ -7,10 +7,8 @@
   <%- include("../forms/newCommentForm") %> <% for(const comment of comments)
   {%>
   <article class="comment">
-    <p>
-      <span class="author"> <%= comment.username %> </span>
-      <span class="date"> <%= comment.date %> </span>
-    </p>
+    <p class="date"><%= comment.date %></p>
+    <p class="author"><%= comment.username %></p>
     <p class="comment-content"><%= comment.comment %></p>
     <div>
       <% if(user === comment.username){ %>

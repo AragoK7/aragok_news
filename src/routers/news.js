@@ -17,11 +17,10 @@ router.get("/:id", async function (req, res) {
     }
     const [[post]] = result;
     const comments = await getNPostComments(req.params.id, 0);
-    console.log(comments);
+
     if (!comments) {
       return res.json(400);
     }
-    console.log(comments);
     return res.render("news", {
       post: post,
       comments: comments,

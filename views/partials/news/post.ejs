@@ -1,8 +1,10 @@
 <!-- <article> -->
 <div class="author_date">
-  <span class="author"> <%= post.author %> </span>
-  <span class="date"> <%= post.date %> </span>
+  <p class="date"><%= post.date %></p>
+  <p class="author"><%= post.author %></p>
 </div>
-<a href="/news/<%= post.id %>"><h1 id="post-title"><%= post.title%></h1></a>
-<span class="post-content"><%= post.content%></span>
+<a href="/news/<%= post.id %>"
+  ><h1 id="post-title" class="title"><%= post.title%></h1></a
+>
+<p class="post-content"><%= post.content%></p>
 <!-- </article> -->

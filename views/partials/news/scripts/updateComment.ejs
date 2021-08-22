@@ -1,7 +1,9 @@
 <script>
   // UPDATE COMMENT
   function editComment(e, commentId) {
-    const currentComment = e.target.previousElementSibling.textContent;
+    const currentComment = e.target
+      .closest(".comment")
+      .querySelector(".comment-content").textContent;
     function populateComment() {
       document.querySelector("#comment").value = currentComment;
       document.querySelector("#comment").focus();

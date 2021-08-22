@@ -16,7 +16,6 @@ async function getNPostComments(postId, page = 0) {
       "SELECT * FROM comments_news WHERE post_id = ? ORDER BY `date` DESC LIMIT ?, ?",
       [postId, lowerLimit, commentsPerPost]
     );
-  console.log("result", result[0]);
   if (!result) {
     // Returns an array of null
     throw new Error("Error trying to get news");

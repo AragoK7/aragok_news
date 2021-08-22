@@ -32,7 +32,6 @@
           return (window.location = "/");
         }
         const { message } = await response.json();
-        console.log(message);
         displayError(message);
       } catch (err) {
         displayError(err.message);
