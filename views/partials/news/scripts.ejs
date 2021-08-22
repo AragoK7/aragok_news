@@ -60,6 +60,10 @@ include("./scripts/adminOnly")%> <% } %>
     `;
         commentsSection.insertAdjacentHTML("beforeend", html);
       });
+      if (data.length < 5) {
+        document.querySelector("#load-more-comments").remove();
+        return;
+      }
       page++;
     } catch (err) {
       displayError(err.message);

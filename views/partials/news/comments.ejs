@@ -1,5 +1,8 @@
 <div id="editCommentPlaceholder"></div>
 <h2>Comments</h2>
+<% if(typeof comments !== undefined && comments.length === 0) {%>
+<p>There are no comments on this post. Be the first one to comment</p>
+<% }%>
 <section id="comments-only">
   <%- include("../forms/newCommentForm") %> <% for(const comment of comments)
   {%>

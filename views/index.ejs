@@ -3,7 +3,7 @@
   <%- include("partials/newsHeader") %> <%- include("partials/navbar") %>
   <section id="section-posts">
     <% if(typeof content != 'undefined'){ %> <% for(const news of content) {%>
-    <article>
+    <article class="post">
       <div class="author_date">
         <span class="date"> <%= news.date %> </span>
       </div>
@@ -16,7 +16,9 @@
     <% } %>
   </section>
   <p id="error"></p>
+  <% if(typeof content != 'undefined' && content.length === 8){ %>
   <button id="load-more-news" onclick="loadMoreNews()">...more news...</button>
+  <% } %>
   <script>
     let timer;
     const clearTimer = () => window.clearInterval(timer);
@@ -43,7 +45,7 @@
         const section = document.querySelector("#section-posts");
         data.forEach((post) => {
           const html = `
-          <article>
+          <article class="post">
           <div class="author_date">
             <span class="date"> ${post.date} </span>
           </div>
