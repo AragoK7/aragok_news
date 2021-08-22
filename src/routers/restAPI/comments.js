@@ -13,19 +13,27 @@ const {
 
 router.get("/:postId/:page", async (req, res) => {
   const page = Number(req.params.page);
-  const result = await getNPostComments(req.params.postId, page);
-  if (result && result[0]) {
-    return res.send(result[0]);
+  try {
+    // if (result && result[0]) {
+    //   return res.send(result[0]);
+    // }
+    // return res.send({ message: "No posts found" });
+    const result = await getNPostComments(req.params.postId, page);
+    if (!result) throw new Error("No more comments");
+    return res.json(result);
+  } catch (err) {
+    return res.json(err.message);
   }
-  return res.send({ error: "No posts found" });
 });
 
 router.get("/:postId", async (req, res) => {
-  const result = await getNPostComments(req.params.postId, 0);
-  if (result && result[0]) {
-    return res.send(result[0]);
+  try {
+    const result = await getNPostComments(req.params.postId, 0);
+    if (!result) throw new Error("No comments");
+    return res.json(result);
+  } catch (err) {
+    return res.json(err.message);
   }
-  return res.send({ error: "No posts found" });
 });
 
 router.get("/", async (req, res) => {

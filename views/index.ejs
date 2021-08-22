@@ -36,8 +36,10 @@
         const response = await fetch(`/posts/getMoreNews/${page}`);
 
         const data = await response.json();
-        console.log(data);
-        if (typeof data === "string") throw new Error("No more news...");
+        if (typeof data === "string") {
+          document.querySelector("#load-more-news").remove();
+          throw new Error("No more news...");
+        }
         const section = document.querySelector("#section-posts");
         data.forEach((post) => {
           const html = `

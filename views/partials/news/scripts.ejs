@@ -24,10 +24,14 @@ include("./scripts/adminOnly")%> <% } %>
 
   async function loadMoreComments() {
     try {
+      clearTimer();
       const response = await fetch(`/comments/<%= post.id%>/${page}`);
       const data = await response.json();
-      console.log(loggedInUser, loggedInUserType);
-
+      const button = document.querySelector("#load-more-comments");
+      if (!(data.length > 0)) {
+        document.querySelector("#load-more-comments").remove();
+        throw new Error("No more comments");
+      }
       data.forEach((comment) => {
         const html = `
           <article class="comment">
@@ -57,7 +61,9 @@ include("./scripts/adminOnly")%> <% } %>
         commentsSection.insertAdjacentHTML("beforeend", html);
       });
       page++;
-    } catch (err) {}
+    } catch (err) {
+      displayError(err.message);
+    }
   }
 </script>
 <%- include("./scripts/newComment")%> <%- include("./scripts/deleteComment")%>

@@ -10,15 +10,19 @@ async function getAllPostComments(postId) {
 }
 async function getNPostComments(postId, page = 0) {
   const lowerLimit = page * commentsPerPost;
-  console.log(postId, page, lowerLimit);
   const result = await dbConnection
     .promise()
     .query(
       "SELECT * FROM comments_news WHERE post_id = ? ORDER BY `date` DESC LIMIT ?, ?",
       [postId, lowerLimit, commentsPerPost]
     );
-  console.log(result);
-  return result;
+  console.log("result", result[0]);
+  if (!result) {
+    // Returns an array of null
+    throw new Error("Error trying to get news");
+  }
+  // returns an array of news
+  return result[0];
 }
 
 async function getCommentById(commentId) {

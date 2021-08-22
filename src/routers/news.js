@@ -16,11 +16,12 @@ router.get("/:id", async function (req, res) {
       return res.sendStatus(404);
     }
     const [[post]] = result;
-    const result2 = await getNPostComments(req.params.id, 0);
-    if (!result2) {
-      return res.sendStatus(400);
+    const comments = await getNPostComments(req.params.id, 0);
+    console.log(comments);
+    if (!comments) {
+      return res.json(400);
     }
-    const [comments] = result2;
+    console.log(comments);
     return res.render("news", {
       post: post,
       comments: comments,

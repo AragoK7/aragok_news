@@ -5,7 +5,7 @@
   padding: 0;
   box-sizing: border-box;
 }
-body {
+html {
   color: white;
   background: #2d2424;
   margin: 0;
@@ -13,6 +13,38 @@ body {
   border: 0;
   font-family: Arial, Helvetica, sans-serif;
 }
+/* INDEX ONLY */
+#section-posts {
+  margin: 4px;
+}
+#section-posts article {
+  background-color: #b85c38;
+  border-radius: 4px;
+  padding: 2px 4px;
+  margin: 6px 0;
+}
+#section-posts h1 {
+  font-size: 28px;
+}
+/* /////////////// */
+/* POST */
+#section-post {
+  background-color: #b85c38;
+  border-radius: 4px;
+  margin: 8px;
+  padding: 8px;
+}
+#section-comments {
+  margin-top: 32px;
+  padding: 16px;
+}
+#section-comments button {
+  margin-top: 4px;
+}
+.comment p:nth-of-type(2) {
+  padding-top: 2px;
+}
+/* ///////////// */
 a {
   text-decoration: none;
   color: lightblue;
@@ -53,33 +85,11 @@ ul #loggedInUser {
 article {
   margin-top: 28px;
 }
-section {
-  padding: 0 20px 20px;
-}
-#section-comments {
-  margin-top: 60px;
-  padding: 16px;
-}
-#section-comments div:last-child {
-  margin-top: 4px;
-}
-#section-post {
-  background-color: #b85c38;
-  border-radius: 4px;
-  margin: 8px;
-  padding: 8px;
-}
+
 #load-more-news {
   display: block;
   margin: auto;
   padding: 2px;
-}
-h1 {
-  font-size: 32px;
-  margin: 0 0 8px;
-}
-h2 {
-  font-size: 24px;
 }
 
 .date {
@@ -145,10 +155,6 @@ form {
 #post-title {
   white-space: pre-wrap;
   overflow-wrap: break-word;
-}
-.comment p:nth-of-type(2) {
-  padding-top: 2px;
-  padding-bottom: 6px;
 }
 
 @media only screen and (max-width: 1000px) {
