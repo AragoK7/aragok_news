@@ -20,8 +20,8 @@
       });
   // UPDATE POST
   function populateInputs() {
-    document.querySelector("#title").value = "<%= post.title%>";
-    document.querySelector("#content").value = "<%= post.content%>";
+    document.querySelector("#title").value = `<%= post.title%>`;
+    document.querySelector("#content").value = `<%= post.content%>`;
     const currentTitle = document.querySelector("#title").value;
     const currentContent = document.querySelector("#content").value;
     document
