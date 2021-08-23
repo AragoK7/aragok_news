@@ -60,9 +60,13 @@
         }
       });
   }
+  function cancelEditPost() {
+    document.querySelector("#form-editPost").remove();
+  }
   function insertForm() {
     const html = `
                 <form
+                  id="form-editPost"
                   action="posts/<%= post.id %>"
                   method="PUT"
                   enctype="application/x-www-form-urlencoded"
@@ -76,6 +80,7 @@
                   </label>
 
                   <button id="saveEdit" type="submit">Save edit</button>
+                  <button type="button" onclick="cancelEditPost()">Cancel</button>
                 </form>
               `;
     document.querySelector("#editSpace").innerHTML = html;

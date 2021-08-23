@@ -54,6 +54,10 @@
       `;
           section.insertAdjacentHTML("beforeend", html);
         });
+        if (data.length < 8) {
+          document.querySelector("#load-more-news").remove();
+          return;
+        }
         page++;
       } catch (err) {
         displayError(err.message);

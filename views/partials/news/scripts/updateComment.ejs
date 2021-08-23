@@ -1,5 +1,9 @@
 <script>
   // UPDATE COMMENT
+  function cancelEditComment() {
+    console.log("here");
+    document.querySelector("#form-editComment").remove();
+  }
   function editComment(e, commentId) {
     const currentComment = e.target
       .closest(".comment")
@@ -8,6 +12,7 @@
       document.querySelector("#comment").value = currentComment;
       document.querySelector("#comment").focus();
     }
+
     const html = `
               <form
               id="form-editComment"
@@ -20,6 +25,7 @@
                 </label>
 
                 <button  type="submit">Save edit</button>
+                <button type="button" onclick="cancelEditComment()">Cancel</button>
               </form>
             `;
     document.querySelector("#editCommentPlaceholder").innerHTML = html;
