@@ -35,9 +35,9 @@ include("./scripts/adminOnly")%> <% } %>
       data.forEach((comment) => {
         const html = `
           <article class="comment">
-            <p class="date"> ${comment.date.toLocaleString("en-GB", {
+            <p class="date"> ${new Date(comment.date).toLocaleString("en-GB", {
               timeZone: "Europe/Belgrade",
-            })} </p>
+            })} GMT+0200</p>
             <p class="author"> ${comment.username} </p>
            <p class="comment-content">${comment.comment}</p>
       <div>

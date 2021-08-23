@@ -7,6 +7,7 @@
       <div class="author_date">
         <p class="date">
           <%= news.date.toLocaleString('en-GB',{timeZone: 'Europe/Belgrade'}) %>
+          GMT+0200
         </p>
       </div>
       <a href="news/<%= news.id%>"
@@ -46,12 +47,13 @@
         }
         const section = document.querySelector("#section-posts");
         data.forEach((post) => {
+          console.log(new Date(post.date));
           const html = `
           <article class="post">
           <div class="author_date">
-            <p class="date"> ${post.date.toLocaleString("en-GB", {
+            <p class="date"> ${new Date(post.date).toLocaleString("en-GB", {
               timeZone: "Europe/Belgrade",
-            })} </p>
+            })} GMT+0200</p>
           </div>
           <a href="news/${post.id}"><h1 class="post-title title">${
             post.title
