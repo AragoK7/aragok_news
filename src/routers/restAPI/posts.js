@@ -1,10 +1,7 @@
 const express = require("express");
 const router = express.Router();
 
-const {
-  redirectLogin,
-  redirectRestricted,
-} = require("../../authentication.js");
+const { redirectRestricted } = require("../../authentication.js");
 const { check, validationResult } = require("express-validator");
 const {
   createPost,
@@ -12,22 +9,6 @@ const {
   updatePost,
   getNPosts,
 } = require("../../database/posts/posts.js");
-
-router.get("/:postId", async (req, res) => {
-  const result = await getAllPosts();
-  if (result && result[0]) {
-    return res.send(result[0]);
-  }
-  return res.send({ error: "No posts found" });
-});
-
-router.get("/", async (req, res) => {
-  const result = await getAllPosts();
-  if (result && result[0]) {
-    return res.send(result[0]);
-  }
-  return res.send({ error: "No posts found" });
-});
 
 router.get("/getMoreNews/:page", async (req, res) => {
   try {
@@ -41,7 +22,7 @@ router.get("/getMoreNews/:page", async (req, res) => {
 
 router.post(
   "/",
-  redirectLogin,
+  redirectRestricted,
   [check("title").notEmpty(), check("content").notEmpty()],
   async (req, res) => {
     const errors = validationResult(req);
@@ -62,7 +43,7 @@ router.post(
 
 router.put(
   "/:postId",
-  redirectLogin,
+  redirectRestricted,
   [check("newTitle").notEmpty(), check("newContent").notEmpty()],
   async function (req, res) {
     const errors = validationResult(req);

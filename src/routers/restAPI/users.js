@@ -1,7 +1,11 @@
 const express = require("express");
 const router = express.Router();
 
-const { redirectHome, redirectLogin } = require("../../authentication.js");
+const {
+  redirectHome,
+  redirectLogin,
+  redirectRestricted,
+} = require("../../authentication.js");
 const { check, validationResult } = require("express-validator");
 const {
   getUser,
@@ -22,7 +26,7 @@ router.get("/:username", async (req, res) => {
   res.redirect("/users");
 });
 
-router.get("/", async (req, res) => {
+router.get("/", redirectRestricted, async (req, res) => {
   const result = await getAllUsers();
   if (result && result[0]) {
     return res.send(result[0]);

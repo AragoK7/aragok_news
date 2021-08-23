@@ -36,13 +36,13 @@ router.get("/:postId", async (req, res) => {
   }
 });
 
-router.get("/", async (req, res) => {
-  const result = await getAllPosts();
-  if (result && result[0]) {
-    return res.send(result[0]);
-  }
-  return res.send({ error: "No posts found" });
-});
+// router.get("/", async (req, res) => {
+//   const result = await getAllPosts();
+//   if (result && result[0]) {
+//     return res.send(result[0]);
+//   }
+//   return res.send({ error: "No posts found" });
+// });
 
 router.post(
   "/",

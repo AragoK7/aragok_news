@@ -1,13 +1,8 @@
 const express = require("express");
 const router = express.Router();
 
-const { redirectLogin } = require("../authentication.js");
 const { getPost } = require("../database/posts/posts.js");
-const {
-  getAllPostComments,
-  getNPostComments,
-  createComment,
-} = require("../database/comments/comments.js");
+const { getNPostComments } = require("../database/comments/comments.js");
 
 router.get("/:id", async function (req, res) {
   try {
