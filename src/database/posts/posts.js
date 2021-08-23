@@ -32,18 +32,19 @@ async function getNPosts(page = 0) {
 async function createPost(username, title, content) {
   return dbConnection
     .promise()
-    .query(
-      "INSERT INTO posts_news (author, title, content, date) VALUES(?, ?, ?, ?)",
-      [username, title, content, getDate()]
-    );
+    .query("INSERT INTO posts_news (author, title, content) VALUES(?, ?, ?)", [
+      username,
+      title,
+      content,
+    ]);
 }
 async function updatePost(title, content, id) {
   return dbConnection.promise().query(
     `UPDATE posts_news
-      SET title = ?, content = ?, date = ?
+      SET title = ?, content = ?
       WHERE id = ?
       `,
-    [title, content, getDate(), id]
+    [title, content, id]
   );
 }
 async function deletePost(id) {

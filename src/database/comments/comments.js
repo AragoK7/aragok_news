@@ -37,16 +37,16 @@ async function createComment(username, commentId, comment) {
   return dbConnection
     .promise()
     .query(
-      "INSERT INTO comments_news (username, post_id, comment, date) VALUES(?, ?, ?, ?)",
-      [username, commentId, comment, getDate()]
+      "INSERT INTO comments_news (username, post_id, comment) VALUES(?, ?, ?)",
+      [username, commentId, comment]
     );
 }
 async function updateComment(comment, commentId) {
   return dbConnection.promise().query(
     `UPDATE comments_news
-  SET comment = ?, date = ?
-  WHERE id = ?`,
-    [comment, getDate(), commentId]
+    SET comment = ?
+    WHERE id = ?`,
+    [comment, commentId]
   );
 }
 async function deleteComment(commentId) {
