@@ -12,6 +12,8 @@ const {
 } = require("../../database/users/users.js");
 const bcrypt = require("bcryptjs");
 
+const regex = /^[a-zA-Z0-9-_]*$/;
+
 router.get("/:username", async (req, res) => {
   const result = await getUser(req.params.username);
   if (result && result[0] && result[0][0]) {
@@ -43,6 +45,23 @@ router.post(
     }
     const { username, password, confirmPassword } = req.body;
     try {
+      if (
+        password.length < 5 ||
+        username.length < 5 ||
+        password.length > 30 ||
+        username.length > 30
+      ) {
+        return res.status(400).json({
+          message:
+            "Username and password must contain beetween 5 and 30 characters characters",
+        });
+      }
+      if (!(regex.test(username) && regex.test(password))) {
+        return res.status(400).json({
+          message:
+            "Username and password must only contain dashes,underscores, letters and numbers",
+        });
+      }
       if (password !== confirmPassword)
         return res.status(400).json({ message: "Password not matching" });
       const existingUser = await getUser(username);
@@ -81,6 +100,23 @@ router.put(
       req.body;
 
     try {
+      if (
+        newPassword.length < 5 ||
+        newUsername.length < 5 ||
+        newPassword.length > 30 ||
+        newUsername.length > 30
+      ) {
+        return res.status(400).json({
+          message:
+            "Username and password must contain beetween 5 and 30 characters characters",
+        });
+      }
+      if (!(regex.test(newUsername) && regex.test(newPassword))) {
+        return res.status(400).json({
+          message:
+            "Username and password must only contain dashes,underscores, letters and numbers",
+        });
+      }
       if (newUsername !== req.session.username) {
         const existingUser = await getUser(newUsername);
         if (existingUser)
