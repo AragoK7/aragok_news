@@ -5,7 +5,9 @@
     <% if(typeof content != 'undefined'){ %> <% for(const news of content) {%>
     <article class="post">
       <div class="author_date">
-        <p class="date"><%= news.date.toLocaleString('en-GB') %></p>
+        <p class="date">
+          <%= news.date.toLocaleString('en-GB',{timeZone: 'Europe/Belgrade'}) %>
+        </p>
       </div>
       <a href="news/<%= news.id%>"
         ><h1 class="post-title title"><%= news.title%></h1></a
@@ -47,9 +49,13 @@
           const html = `
           <article class="post">
           <div class="author_date">
-            <p class="date"> ${post.date} </p>
+            <p class="date"> ${post.date.toLocaleString("en-GB", {
+              timeZone: "Europe/Belgrade",
+            })} </p>
           </div>
-          <a href="news/${post.id}"><h1 class="post-title title">${post.title}</h1></a>
+          <a href="news/${post.id}"><h1 class="post-title title">${
+            post.title
+          }</h1></a>
         </article>
       `;
           section.insertAdjacentHTML("beforeend", html);

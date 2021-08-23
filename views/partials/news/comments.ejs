@@ -7,7 +7,9 @@
   <%- include("../forms/newCommentForm") %> <% for(const comment of comments)
   {%>
   <article class="comment">
-    <p class="date"><%= comment.date %></p>
+    <p class="date">
+      <%= comment.date.toLocaleString('en-GB',{timeZone: 'Europe/Belgrade'}) %>
+    </p>
     <p class="author"><%= comment.username %></p>
     <p class="comment-content"><%= comment.comment %></p>
     <div>

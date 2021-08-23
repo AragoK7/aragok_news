@@ -1,6 +1,8 @@
 <!-- <article> -->
 <div class="author_date">
-  <p class="date"><%= post.date %></p>
+  <p class="date">
+    <%= post.date.toLocaleString('en-GB',{timeZone: 'Europe/Belgrade'}) %>
+  </p>
   <p class="author"><%= post.author %></p>
 </div>
 <a href="/news/<%= post.id %>"
