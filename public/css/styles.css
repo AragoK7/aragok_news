@@ -18,8 +18,40 @@ a {
   display: block;
   width: 100%;
 }
+input,
+textarea {
+  background-color: beige;
+  border: none;
+  outline: none;
+  padding: 4px;
+  font-size: 16px;
+  background-image: none;
+  -webkit-box-shadow: none;
+  -moz-box-shadow: none;
+  box-shadow: none;
+  border-radius: 8px;
+  border: 1px solid #b85c38;
+  max-width: 100%;
+}
+input {
+  width: 288px;
+}
 button {
   cursor: pointer;
+  background-color: #b85c38;
+  color: lightblue;
+  outline: none;
+  border: none;
+  font-size: 16px;
+  font-weight: bold;
+  padding: 4px 5px 4px 4px;
+  border: 1px solid #e0c097;
+  border-radius: 4px;
+  margin: auto;
+}
+article button,
+#section-post button {
+  border-color: #2d2424;
 }
 nav {
   background: #b85c38;
@@ -55,6 +87,7 @@ html {
   width: 1000px;
   background: #5c3d2e;
   min-height: 100vh;
+  padding-bottom: 16px;
 }
 #outside-container a {
   color: lightblue;
@@ -132,7 +165,6 @@ html {
 #load-more-news {
   display: block;
   margin: auto;
-  padding: 2px;
 }
 
 #error {
@@ -156,9 +188,9 @@ html {
 #form-updateUser > * {
   margin-top: 4px;
 }
-button {
+/* button {
   width: fit-content;
-}
+} */
 form {
   display: flex;
   flex-direction: column;
@@ -194,6 +226,18 @@ form {
   .comment-content {
     font-size: 16px;
     max-height: 74px;
+  }
+  button {
+    border-radius: 2px;
+    font-size: 14px;
+    padding: 2px 3px 2px 2px;
+  }
+  input {
+    width: 256px;
+    font-size: 14px;
+  }
+  textarea {
+    font-size: 14px;
   }
 }
 @media only screen and (max-width: 520px) {
